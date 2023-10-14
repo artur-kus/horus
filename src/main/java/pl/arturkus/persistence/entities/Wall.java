@@ -44,11 +44,11 @@ public class Wall implements Structure {
     }
 
     private <T> T visit(BlockVisitor<T> blockVisitor, List<Block> blocks) {
-        for (Block block : blocks) {
+        blocks.forEach(block -> {
             if (block instanceof CompositeBlock) {
                 blockVisitor.visit((CompositeBlock) block);
             } else blockVisitor.visit(block);
-        }
+        });
         return blockVisitor.getResult();
     }
 
@@ -71,9 +71,7 @@ public class Wall implements Structure {
 
         @Override
         public void visit(CompositeBlock block) {
-            for (Block blockBlock : block.getBlocks()) {
-                visit(blockBlock);
-            }
+            block.getBlocks().forEach(this::visit);
         }
 
         @Override
@@ -92,9 +90,7 @@ public class Wall implements Structure {
 
         @Override
         public void visit(CompositeBlock block) {
-            for (Block blockBlock : block.getBlocks()) {
-                visit(blockBlock);
-            }
+            block.getBlocks().forEach(this::visit);
         }
 
         @Override
